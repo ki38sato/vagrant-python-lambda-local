@@ -1,0 +1,15 @@
+---
+- name: yum install depenencies
+  yum: name={{ item }}
+  sudo: yes
+  with_items:
+    - gcc
+    - git
+    - patch
+    - openssl-devel
+    - readline-devel
+    - sqlite-devel
+    - bzip2-devel
+
+- include: pyenv.yml
+  sudo_user: vagrant

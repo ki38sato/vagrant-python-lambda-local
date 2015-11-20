@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  sudo: yes
+  vars:
+    - pyenv_python_version: 2.7.10
+  roles:
+    - python-lambda-local

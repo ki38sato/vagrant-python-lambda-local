@@ -1,0 +1,30 @@
+---
+- name: git clone pyenv
+  git: repo=https://github.com/yyuu/pyenv.git dest=~/.pyenv
+
+- name: git clone pyenv-virtualenv
+  git: repo=https://github.com/yyuu/pyenv-virtualenv.git dest=~/.pyenv/plugins/pyenv-virtualenv
+
+- name: git clone pyenv-pip-rehash
+  git: repo=https://github.com/yyuu/pyenv-pip-rehash.git dest=~/.pyenv/plugins/pyenv-pip-rehash
+
+- name: copy bashrc
+  copy: src=bashrc dest=/home/vagrant/.bashrc
+
+- name: install pyenv
+  shell: |
+    source ~/.bashrc
+    pyenv install {{ pyenv_python_version }}
+    pyenv rehash
+    pyenv shell {{ pyenv_python_version }}
+    pyenv exec pip install --upgrade pip
+    pyenv exec pip install wheel
+    pyenv virtualenv {{ pyenv_python_version }} lambda-{{ pyenv_python_version }}
+    pyenv global lambda-{{ pyenv_python_version }}
+
+- name: install python-lambda-local
+  shell: |
+    source ~/.bashrc
+    pyenv global lambda-{{ pyenv_python_version }}
+    pyenv exec pip install python-lambda-local
+    pyenv exec pip install lambda-uploader
