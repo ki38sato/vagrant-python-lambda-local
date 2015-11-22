@@ -18,5 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.name = "#{HOSTNAME1}"
     end
   end
-
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["setextradata", :id, "VBoxInternal/Devices/VMMDev/0/Config/GetHostTimeDisabled", 0]
+  end
 end
